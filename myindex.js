@@ -1,4 +1,4 @@
-const EorzeaWeather = require('./eorzea-weather.js');
+// const EorzeaWeather = require('./eorzea-weather.js');
 
 const ET_ONE_HOUR = 175 * 1000
 const ET_EIGHT_HOUR = ET_ONE_HOUR * 8
