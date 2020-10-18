@@ -1,36 +1,61 @@
 const EorzeaWeather = require('./eorzea-weather.js');
-// const EorzeaTime = require('./eorzea-time.js');
-
-// var eorzeaTime = new EorzeaTime(new Date());
-// console.log(eorzeaTime.toString());
 
 const ET_ONE_HOUR = 175 * 1000
 const ET_EIGHT_HOUR = ET_ONE_HOUR * 8
 const ET_ONE_DAY = ET_ONE_HOUR * 24
 
-var startDate = null
-var reportNum = 96 + 24 + 3
-var outputStr = ""
-for (var i = 0; i < reportNum; i++) {
-    if (startDate == null) {
-        startDate = getStartTime(new Date())
-    } else {
-        startDate = new Date(startDate.getTime() + ET_EIGHT_HOUR)
+exec()
+
+function exec() {
+    // const EorzeaTime = require('./eorzea-time.js');
+
+    // var eorzeaTime = new EorzeaTime(new Date());
+    // console.log(eorzeaTime.toString());
+
+
+    var startDate = null
+    var reportNum = 48
+    var outputStr = ""
+    var tmpStr = ""
+    var result = {}
+
+    for (var i = 0; i < reportNum; i++) {
+        if (startDate == null) {
+            startDate = getStartTime(new Date())
+        } else {
+            startDate = new Date(startDate.getTime() + ET_EIGHT_HOUR)
+        }
+        if (i % 3 != 2) {
+            tmpStr = tmpStr + (outputFormat(startDate) + "、")
+        } else {
+            tmpStr = tmpStr + (outputFormat(startDate)) + "\n"
+            outputStr += tmpStr
+            // console.log(tmpStr)
+            tmpStr = ""
+        }
     }
-    if(i % 3 != 2){
-        outputStr = outputStr +  (outputFormat(startDate) + "、")
-    } else {
-        outputStr = outputStr +  (outputFormat(startDate))
-        console.log(outputStr)
-        outputStr = ""
+    if (tmpStr != "") {
+        outputStr += tmpStr
+        // console.log(outputStr)
     }
-}
-if(outputStr != "") {
+
+    console.log("output is")
     console.log(outputStr)
-    outputStr = ""
+
+    domChange(outputStr)
+
+    return;
 }
 
-return;
+
+
+function domChange(wResult){
+
+    var elem = document.getElementById("wResult")
+    elem.innerHTML = wResult
+}
+
+
 
 // 出力文字列用の文字列を作成する
 function outputFormat(startDate) {
