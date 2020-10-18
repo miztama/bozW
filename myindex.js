@@ -1,68 +1,26 @@
-// const EorzeaWeather = require('eorzea-weather');
-// const EorzeaWeather = import("./eorzea-weather.js");
 const EorzeaWeather = require('./eorzea-weather.js');
-// var hoge = EorzeaWeather.getWeather(EorzeaWeather.ZONE_EUREKA_ANEMOS, new Date()); // Gales
-// var hoge = EorzeaWeather.getWeather(EorzeaWeather.ZONE_AMH_ARAENG, new Date());
+// const EorzeaTime = require('./eorzea-time.js');
 
-
-//var EorzeaTime = require('eorzea-time');
-const EorzeaTime = require('./eorzea-time.js');
-var eorzeaTime = new EorzeaTime(new Date());
-console.log(eorzeaTime.toString());
-
-
-const startDate = new Date();
-startDate.setSeconds(0);
-
-
-console.log("111");
-console.log("222");
-
-var result = checkWeather(startDate);
-console.log(startDate.getDate() + "日" + startDate.getHours() + "時" + startDate.getMinutes() + "分：" + result);
-
-console.log("333");
-/*
-var resutlWeather = getWeather(startDate, 60)
-for (var i = 0; i < resutlWeather.length; i++) {
-    console.log(resutlWeather[i].time.getDate() + "日" + resutlWeather[i].time.getHours() + "時" + resutlWeather[i].time.getMinutes() + "分：" + resutlWeather[i].weather);
-}
-*/
-
-console.log("444")
+// var eorzeaTime = new EorzeaTime(new Date());
+// console.log(eorzeaTime.toString());
 
 const ET_ONE_HOUR = 175 * 1000
 const ET_EIGHT_HOUR = ET_ONE_HOUR * 8
 const ET_ONE_DAY = ET_ONE_HOUR * 24
 
-// 直前
-var startDate2 = null
-var reportNum = 24
-for (var i = 0; i < reportNum; i++) {
-    if (startDate2 == null) {
-        startDate2 = getStartTime(new Date())
-    } else {
-        startDate2 = new Date(startDate2.getTime() + ET_EIGHT_HOUR)
-    }
-    console.log(outputFormat(startDate2))
-}
-
-
-console.log("555")
-// 直前
-var startDate2 = null
+var startDate = null
 var reportNum = 96 + 24 + 3
 var outputStr = ""
 for (var i = 0; i < reportNum; i++) {
-    if (startDate2 == null) {
-        startDate2 = getStartTime(new Date())
+    if (startDate == null) {
+        startDate = getStartTime(new Date())
     } else {
-        startDate2 = new Date(startDate2.getTime() + ET_EIGHT_HOUR)
+        startDate = new Date(startDate.getTime() + ET_EIGHT_HOUR)
     }
     if(i % 3 != 2){
-        outputStr = outputStr +  (outputFormat(startDate2) + "、")
+        outputStr = outputStr +  (outputFormat(startDate) + "、")
     } else {
-        outputStr = outputStr +  (outputFormat(startDate2))
+        outputStr = outputStr +  (outputFormat(startDate))
         console.log(outputStr)
         outputStr = ""
     }
@@ -72,17 +30,13 @@ if(outputStr != "") {
     outputStr = ""
 }
 
-
 return;
 
-
-
 // 出力文字列用の文字列を作成する
-function outputFormat(startDate2) {
-    return weatherSpacing(checkWeather(startDate2)) + "（" + hourSpacing(startDate2.getHours()) + ":" + zeroSpacing(startDate2.getMinutes()) + "）"
-    //    return startDate2.toString() + "：" + checkWeather(startDate2)
+function outputFormat(startDate) {
+    return weatherSpacing(checkWeather(startDate)) + "（" + hourSpacing(startDate.getHours()) + ":" + zeroSpacing(startDate.getMinutes()) + "）"
+    //    return startDate.toString() + "：" + checkWeather(startDate)
 }
-
 
 function getStartTime(date) {
     const oneHour = 175 * 1000;
@@ -133,28 +87,4 @@ function weatherSpacing(weatherStr) {
 function hourSpacing(hour) {
     return hour < 10 ? " " + hour : hour
 }
-
-
-/*
-
-var count = 30;
-var tmpDate;
-for (var i = 0; i < count; i++) {
-    console.log(startDate.toString());
-    var hoge = EorzeaWeather.getWeather(EorzeaWeather.ZONE_BOZJANSOUTHERNLINE, startDate);
-    console.log(hoge)
-
-    startDate.setMinutes(startDate.getMinutes()+1);
-    console.log()
-}
-
-
-
-
-
-
-
-
-
-*/
 
